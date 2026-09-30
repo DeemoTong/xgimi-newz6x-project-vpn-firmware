@@ -1,0 +1,16 @@
+# Firmware release split files and generated firmware binaries are intentionally kept out of Git.
+*.bin
+*.img
+*.sparse
+*.apk
+*.aab
+*.pem
+*.key
+*.rsa
+*.p12
+*.keystore
+*.jks
+*.vdex
+*.oat
+*.dex
+__pycache__/

@@ -1,0 +1,16 @@
+# VpnDialogs system overlay
+
+The tested firmware places the Android 8.0/API 26 `VpnDialogs.apk` in `/system/priv-app/VpnDialogs` and sets the expected system SELinux context. The following `debugfs` commands document that overlay against an already reconstructed ext4 system image. They do not unpack or repack an XGIMI `.bin` container.
+
+Build the APK from the matching AOSP 8.0 source tree with the platform build environment, then substitute the host path for `APK_PATH` in the `write` command:
+
+```text
+mkdir /priv-app/VpnDialogs
+cd /priv-app/VpnDialogs
+write APK_PATH VpnDialogs.apk
+set_inode_field VpnDialogs.apk mode 0100644
+ea_set . security.selinux u:object_r:system_file:s0
+ea_set VpnDialogs.apk security.selinux u:object_r:system_file:s0
+```
+
+The tested integration used the standard AOSP package source and the Android 8.0 system APIs. Rebuilding and signing the complete XGIMI firmware requires the matching base image and compatible firmware tooling; private signing keys are intentionally not provided.
